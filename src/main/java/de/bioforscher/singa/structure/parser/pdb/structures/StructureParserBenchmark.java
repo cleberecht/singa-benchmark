@@ -47,7 +47,7 @@ public class StructureParserBenchmark {
     public void batchLocalPdb() {
         MultiParser multiParser = StructureParser.local()
                                                  .localPDB(new LocalPDB(BenchmarkConstants.LOCAL_PDB_LOCATION, SourceLocation.OFFLINE_PDB))
-                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH, "\t")
+                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH_500, "\t")
                                                  .setOptions(structureParserOptions);
         while (multiParser.hasNext()) {
             try {
@@ -62,7 +62,7 @@ public class StructureParserBenchmark {
     public void batchLocalMmtf() {
         MultiParser multiParser = StructureParser.local()
                                                  .localPDB(new LocalPDB(BenchmarkConstants.LOCAL_PDB_LOCATION, SourceLocation.OFFLINE_MMTF))
-                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH, "\t")
+                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH_500, "\t")
                                                  .setOptions(structureParserOptions);
         while (multiParser.hasNext()) {
             try {

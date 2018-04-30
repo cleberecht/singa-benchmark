@@ -10,7 +10,6 @@ import de.bioforscher.singa.structure.parser.pdb.structures.SourceLocation;
 import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser;
 import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser.LocalPDB;
 import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser.MultiParser;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParserOptions;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -28,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class Fit3DBenchmark {
 
-    private StructureParserOptions structureParserOptions;
     private StructuralMotif queryMotif;
     private Structure pdbTarget;
     private Structure mmtfTarget;
@@ -49,7 +47,7 @@ public class Fit3DBenchmark {
     @Setup
     public void setUp() {
         Structure motifContainingStructure = StructureParser.local()
-                                                            .fileLocation(Resources.getResourceAsFileLocation("1GL0_HDS_intra_E-H57_E-D102_E-S195.pdb"))
+                                                            .fileLocation(Resources.getResourceAsFileLocation("structural_motifs/1GL0_HDS_intra_E-H57_E-D102_E-S195.pdb"))
                                                             .parse();
         queryMotif = StructuralMotif.fromLeafIdentifiers(motifContainingStructure,
                                                          LeafIdentifiers.of("E-57", "E-102", "E-195"));
@@ -60,19 +58,14 @@ public class Fit3DBenchmark {
         mmtfTarget = StructureParser.mmtf()
                                     .pdbIdentifier("4cha")
                                     .parse();
-
-        structureParserOptions = StructureParserOptions.withSettings(StructureParserOptions.Setting.OMIT_EDGES,
-                                                                     StructureParserOptions.Setting.OMIT_HYDROGENS,
-                                                                     StructureParserOptions.Setting.OMIT_LIGAND_INFORMATION,
-                                                                     StructureParserOptions.Setting.GET_IDENTIFIER_FROM_FILENAME);
     }
 
     @Benchmark
     public void runWithLocalPdb() {
         MultiParser multiParser = StructureParser.local()
                                                  .localPDB(new LocalPDB(BenchmarkConstants.LOCAL_PDB_LOCATION, SourceLocation.OFFLINE_PDB))
-                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH, "\t")
-                                                 .setOptions(structureParserOptions);
+                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH_500, "\t")
+                                                 .setOptions(BenchmarkConstants.STRUCTURE_PARSER_OPTIONS);
         Fit3DBuilder.create()
                     .query(queryMotif)
                     .targets(multiParser)
@@ -85,8 +78,8 @@ public class Fit3DBenchmark {
     public void runWithLocalMmtf() {
         MultiParser multiParser = StructureParser.local()
                                                  .localPDB(new LocalPDB(BenchmarkConstants.LOCAL_PDB_LOCATION, SourceLocation.OFFLINE_MMTF))
-                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH, "\t")
-                                                 .setOptions(structureParserOptions);
+                                                 .chainList(BenchmarkConstants.CHAIN_LIST_PATH_500, "\t")
+                                                 .setOptions(BenchmarkConstants.STRUCTURE_PARSER_OPTIONS);
         Fit3DBuilder.create()
                     .query(queryMotif)
                     .targets(multiParser)
