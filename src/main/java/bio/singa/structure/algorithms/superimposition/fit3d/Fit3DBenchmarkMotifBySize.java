@@ -1,12 +1,12 @@
-package de.bioforscher.singa.structure.algorithms.superimposition.fit3d;
+package bio.singa.structure.algorithms.superimposition.fit3d;
 
-import de.bioforscher.singa.core.utility.Resources;
-import de.bioforscher.singa.structure.BenchmarkConstants;
-import de.bioforscher.singa.structure.model.oak.StructuralEntityFilter;
-import de.bioforscher.singa.structure.model.oak.StructuralMotif;
-import de.bioforscher.singa.structure.model.oak.Structures;
-import de.bioforscher.singa.structure.parser.pdb.structures.SourceLocation;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser;
+import bio.singa.core.utility.Resources;
+import bio.singa.structure.BenchmarkConstants;
+import bio.singa.structure.model.oak.StructuralEntityFilter;
+import bio.singa.structure.model.oak.StructuralMotif;
+import bio.singa.structure.model.oak.Structures;
+import bio.singa.structure.parser.pdb.structures.SourceLocation;
+import bio.singa.structure.parser.pdb.structures.StructureParser;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;

@@ -1,8 +1,8 @@
-package de.bioforscher.singa.structure.parser.pdb.structures;
+package bio.singa.structure.parser.pdb.structures;
 
-import de.bioforscher.singa.structure.BenchmarkConstants;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser.LocalPDB;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser.MultiParser;
+import bio.singa.structure.BenchmarkConstants;
+import bio.singa.structure.parser.pdb.structures.StructureParser.LocalPDB;
+import bio.singa.structure.parser.pdb.structures.StructureParser.MultiParser;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;

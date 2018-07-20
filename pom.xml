@@ -5,14 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.bioforscher.singa</groupId>
+    <groupId>bio.singa</groupId>
     <artifactId>singa-benchmark</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jmh.version>1.19</jmh.version>
-        <singa.version>0.3.2</singa.version>
+        <singa.version>0.4.0</singa.version>
         <javac.target>1.8</javac.target>
         <uberjar.name>singa-benchmark</uberjar.name>
     </properties>
@@ -30,7 +30,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.bioforscher.singa</groupId>
+            <groupId>bio.singa</groupId>
             <artifactId>singa-structure</artifactId>
             <version>${singa.version}</version>
         </dependency>

@@ -1,4 +1,4 @@
-package de.bioforscher.singa.structure;
+package bio.singa.structure;
 
 /**
  * @author fk

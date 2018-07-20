@@ -1,11 +1,13 @@
-package de.bioforscher.singa.structure.algorithms.superimposition.fit3d;
+package bio.singa.structure.algorithms.superimposition.fit3d;
 
-import de.bioforscher.singa.core.utility.Resources;
-import de.bioforscher.singa.structure.BenchmarkConstants;
-import de.bioforscher.singa.structure.model.oak.StructuralEntityFilter;
-import de.bioforscher.singa.structure.model.oak.StructuralMotif;
-import de.bioforscher.singa.structure.parser.pdb.structures.SourceLocation;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser;
+import bio.singa.core.utility.Resources;
+import bio.singa.structure.BenchmarkConstants;
+import bio.singa.structure.model.families.AminoAcidFamily;
+import bio.singa.structure.model.identifiers.LeafIdentifier;
+import bio.singa.structure.model.oak.StructuralEntityFilter;
+import bio.singa.structure.model.oak.StructuralMotif;
+import bio.singa.structure.parser.pdb.structures.SourceLocation;
+import bio.singa.structure.parser.pdb.structures.StructureParser;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
@@ -31,10 +33,12 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class Fit3DBenchmarkSingleMotif {
 
-    @Param({"PDB", "MMTF"})
+    //    @Param({"PDB", "MMTF"})
+    @Param({"MMTF"})
     private String parsing;
 
     @Param({"250", "500", "750", "1000", "1250", "1500", "1750", "2000"})
+//    @Param({"250", "500"})
     private int datasetSize;
     private StructuralMotif queryMotif;
 
@@ -75,10 +79,19 @@ public class Fit3DBenchmarkSingleMotif {
 
     @Setup
     public void setUp() {
-        queryMotif = StructuralMotif.fromLeafSubstructures(StructureParser.local()
-                                                                          .path(Paths.get(Resources.getResourceAsFileLocation("structural_motifs/1GL0_HDS_intra_E-H57_E-D102_E-S195.pdb")))
-                                                                          .parse()
-                                                                          .getAllLeafSubstructures());
+//        queryMotif = StructuralMotif.fromLeafSubstructures(StructureParser.local()
+//                                                                          .path(Paths.get(Resources.getResourceAsFileLocation("structural_motifs/1GL0_HDS_intra_E-H57_E-D102_E-S195.pdb")))
+//                                                                          .parse()
+//                                                                          .getAllLeafSubstructures());
+        StructuralMotif structuralMotif = StructuralMotif.fromLeafSubstructures(StructureParser.local()
+                                                                                               .inputStream(Resources.getResourceAsStream("structural_motifs/motif_KDEEH.pdb"))
+                                                                                               .parse()
+                                                                                               .getAllLeafSubstructures());
+        structuralMotif.addExchangeableFamily(LeafIdentifier.fromSimpleString("A-164"), AminoAcidFamily.HISTIDINE);
+        structuralMotif.addExchangeableFamily(LeafIdentifier.fromSimpleString("A-247"), AminoAcidFamily.ASPARTIC_ACID);
+        structuralMotif.addExchangeableFamily(LeafIdentifier.fromSimpleString("A-247"), AminoAcidFamily.ASPARAGINE);
+        structuralMotif.addExchangeableFamily(LeafIdentifier.fromSimpleString("A-297"), AminoAcidFamily.LYSINE);
+        queryMotif = structuralMotif;
     }
 
     @Benchmark
@@ -98,11 +111,13 @@ public class Fit3DBenchmarkSingleMotif {
                                                                  .localPDB(new StructureParser.LocalPDB(BenchmarkConstants.LOCAL_PDB_LOCATION, sourceLocation))
                                                                  .chainList(chainListPath, "\t")
                                                                  .setOptions(BenchmarkConstants.STRUCTURE_PARSER_OPTIONS);
-        Fit3DBuilder.create()
-                    .query(queryMotif)
-                    .targets(multiParser)
-                    .maximalParallelism()
-                    .atomFilter(StructuralEntityFilter.AtomFilter.isArbitrary())
-                    .run();
+        Fit3D run = Fit3DBuilder.create()
+                                .query(queryMotif)
+                                .targets(multiParser)
+                                .maximalParallelism()
+                                .atomFilter(StructuralEntityFilter.AtomFilter.isArbitrary())
+                                .filterEnvironments(5)
+                                .run();
+        System.out.println(run.getMatches().size());
     }
 }

@@ -1,13 +1,13 @@
-package de.bioforscher.singa.structure.algorithms.superimposition.fit3d;
+package bio.singa.structure.algorithms.superimposition.fit3d;
 
-import de.bioforscher.singa.core.utility.Resources;
-import de.bioforscher.singa.structure.BenchmarkConstants;
-import de.bioforscher.singa.structure.model.interfaces.LeafSubstructure;
-import de.bioforscher.singa.structure.model.oak.StructuralEntityFilter;
-import de.bioforscher.singa.structure.model.oak.StructuralMotif;
-import de.bioforscher.singa.structure.model.oak.Structures;
-import de.bioforscher.singa.structure.parser.pdb.structures.SourceLocation;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser;
+import bio.singa.core.utility.Resources;
+import bio.singa.structure.BenchmarkConstants;
+import bio.singa.structure.model.interfaces.LeafSubstructure;
+import bio.singa.structure.model.oak.StructuralEntityFilter;
+import bio.singa.structure.model.oak.StructuralMotif;
+import bio.singa.structure.model.oak.Structures;
+import bio.singa.structure.parser.pdb.structures.SourceLocation;
+import bio.singa.structure.parser.pdb.structures.StructureParser;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.Runner;
@@ -39,10 +39,10 @@ import java.util.concurrent.TimeUnit;
 public class Fit3DBenchmarkEnvironmentFiltering {
 
     @Param({
- "286",
-            "285",
-            "284",
-            "283",
+                   "286",
+                   "285",
+                   "284",
+                   "283",
 //            "282",
 //            "281",
 //            "280",
@@ -327,7 +327,7 @@ public class Fit3DBenchmarkEnvironmentFiltering {
 //            "1",
            })
     private int enumeration;
-    @Param({"true","false"})
+    @Param({"true", "false"})
     private boolean environmentFiltering;
     private StructuralMotif queryMotif;
 
@@ -342,7 +342,7 @@ public class Fit3DBenchmarkEnvironmentFiltering {
                 .timeUnit(TimeUnit.MILLISECONDS)
                 .build();
         Collection<RunResult> results = new Runner(opt).run();
-        StringJoiner stringJoiner = new StringJoiner("\n", "enumeration,environment_filtering,size,extent,label_count,min,max,mean,stdev,ci95_min,ci95_max\n", "");
+        StringJoiner stringJoiner = new StringJoiner("\n", "enumeration,environment_filtering,match_count,size,extent,label_count,min,max,mean,stdev,ci95_min,ci95_max\n", "");
         for (RunResult result : results) {
             Statistics statistics = result.getPrimaryResult().getStatistics();
             double[] confidenceInterval = statistics.getConfidenceIntervalAt(0.95);
@@ -359,6 +359,7 @@ public class Fit3DBenchmarkEnvironmentFiltering {
                                              .map(LeafSubstructure::getFamily)
                                              .distinct()
                                              .count();
+
             String resultLine = enumeration +
                                 "," +
                                 environmentFiltering +
@@ -405,10 +406,11 @@ public class Fit3DBenchmarkEnvironmentFiltering {
                                                                .targets(multiParser)
                                                                .maximalParallelism()
                                                                .atomFilter(StructuralEntityFilter.AtomFilter.isArbitrary());
-        if(environmentFiltering){
-            parameterStep.filterEnvironments().run();
-        }else {
-            parameterStep.run();
+        Fit3D run;
+        if (environmentFiltering) {
+            run = parameterStep.filterEnvironments(8.0).run();
+        } else {
+            run = parameterStep.run();
         }
     }
 }

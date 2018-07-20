@@ -1,7 +1,7 @@
-import de.bioforscher.singa.structure.model.oak.StructuralMotif;
-import de.bioforscher.singa.structure.model.oak.Structures;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureWriter;
+import bio.singa.structure.model.oak.StructuralMotif;
+import bio.singa.structure.model.oak.Structures;
+import bio.singa.structure.parser.pdb.structures.StructureParser;
+import bio.singa.structure.parser.pdb.structures.StructureWriter;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

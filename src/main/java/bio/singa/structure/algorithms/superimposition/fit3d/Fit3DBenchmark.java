@@ -1,15 +1,15 @@
-package de.bioforscher.singa.structure.algorithms.superimposition.fit3d;
+package bio.singa.structure.algorithms.superimposition.fit3d;
 
-import de.bioforscher.singa.core.utility.Resources;
-import de.bioforscher.singa.structure.BenchmarkConstants;
-import de.bioforscher.singa.structure.model.identifiers.LeafIdentifiers;
-import de.bioforscher.singa.structure.model.interfaces.Structure;
-import de.bioforscher.singa.structure.model.oak.StructuralEntityFilter.AtomFilter;
-import de.bioforscher.singa.structure.model.oak.StructuralMotif;
-import de.bioforscher.singa.structure.parser.pdb.structures.SourceLocation;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser.LocalPDB;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParser.MultiParser;
+import bio.singa.core.utility.Resources;
+import bio.singa.structure.BenchmarkConstants;
+import bio.singa.structure.model.identifiers.LeafIdentifiers;
+import bio.singa.structure.model.interfaces.Structure;
+import bio.singa.structure.model.oak.StructuralEntityFilter.AtomFilter;
+import bio.singa.structure.model.oak.StructuralMotif;
+import bio.singa.structure.parser.pdb.structures.SourceLocation;
+import bio.singa.structure.parser.pdb.structures.StructureParser;
+import bio.singa.structure.parser.pdb.structures.StructureParser.LocalPDB;
+import bio.singa.structure.parser.pdb.structures.StructureParser.MultiParser;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;

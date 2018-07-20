@@ -1,7 +1,7 @@
-package de.bioforscher.singa.structure;
+package bio.singa.structure;
 
-import de.bioforscher.singa.core.utility.Resources;
-import de.bioforscher.singa.structure.parser.pdb.structures.StructureParserOptions;
+import bio.singa.core.utility.Resources;
+import bio.singa.structure.parser.pdb.structures.StructureParserOptions;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
